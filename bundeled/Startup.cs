@@ -42,7 +42,7 @@ namespace bundeled
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Key"])),
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        RequireExpirationTime = false
+                        RequireExpirationTime = true
                     };
                 });
         }

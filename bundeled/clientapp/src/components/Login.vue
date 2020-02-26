@@ -2,8 +2,8 @@
     <div>
         <input type="text" placeholder="username" v-model="userName">
         <input type="password" placeholder="password" v-model="password">
-        <input v-model="token">
         <button @click="Login">Login</button>
+        
     </div>
 </template>
 
@@ -20,7 +20,7 @@ data(){
     }
     },
     methods: {
-        Login: function(){
+        Login: async function(){
             const options = {
                 method: 'post',
                 url:'/weatherforecast/login',
@@ -29,9 +29,18 @@ data(){
                     password: this.password
                 }
             }
+            
+            await axios(options)
+            //.then((response)=> this.token=response);
+            .then((response) => this.token = response.data);
             /* eslint-disable no-console */
-            axios(options).then((response) => this.token = response.data);
             console.log(this.token);
+            /* eslint-enable no-console */
+            localStorage.setItem('token',this.token);
+        },
+        sayHello: function(){
+            /* eslint-disable no-console */
+            console.log("hello");
             /* eslint-enable no-console */
         }
     }
