@@ -16,7 +16,7 @@ export default Vue.extend({
   data() {
     return {
       message: "empty",
-      url: "/weatherforecast/secret",
+      url: "/user/secret",
       options: ""
     };
   },

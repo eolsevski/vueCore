@@ -19,18 +19,33 @@ export default Vue.extend({
       token: "undefined"
     };
   },
-  methods: {
+  methods: { 
     Login: async function() {
       const options = {
         method: "post",
-        url: "/weatherforecast/login",
+        url: "/user/login",
         data: {
           username: this.userName,
           password: this.password
         }
       };
-      await axios(options).then(response => (this.token = response.data.token));
-      localStorage.setItem("token", this.token);
+      
+      await axios(options)
+      .then(function(response) {
+        //this.token = response.data.token;
+        localStorage.setItem("token", response.data.token);
+        /* eslint-disable no-console */
+        console.log(response.data.token);
+        /* eslint-enable no-console */ 
+        })
+      .catch(function(error) {
+        /* eslint-disable no-console */
+        console.log('errorMsg: ' + error);
+        /* eslint-enable no-console */
+        })
+        ;
+      
+      
     },
     Logout: function() {
       localStorage.removeItem("token");

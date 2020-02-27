@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.Domain.Auth
 {
-    class AuthenticateModel
+    public class AuthenticateModel
     {
         [Required]
         public string Username { get; set; }
