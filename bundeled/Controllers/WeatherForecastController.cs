@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Domain.DomainServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,9 +23,13 @@ namespace bundeled.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private IUserService _userServices;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger
+            ,IUserService userServices
+            )
         {
+            _userServices = userServices;
             _logger = logger;
         }
 
@@ -65,8 +70,11 @@ namespace bundeled.Controllers
                 expires: DateTime.Now.AddMinutes(1),
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes("12b6fb24-adb8-4ce5-aa49-79b265ebf256")),
-                    SecurityAlgorithms.HmacSha256));
 
+                    SecurityAlgorithms.HmacSha256));
+            
+             var user = _userServices.Authenticate("userName", "password");
+            
             return Ok(new { token = tokenHandler.WriteToken(jwt)});
 
 

@@ -20,7 +20,5 @@ components:{
 div{
     display: flex;
     flex-direction: column;
-    border: dashed red 1px;
-}
-
+    }
 </style>

@@ -26,15 +26,12 @@ export default Vue.extend({
 
       //prepare_request();
       /*eslint-disable no-console*/
-      console.log(this.options);
       this.message = await axios(this.options)
         .then(function(response) {
-          console.log(response.data);
           return response.data;
         })
         .catch(function(error) {
           if (error.response.status == 401) {
-            console.log("neautorizuotas");
             return "neautorizuotas";
           }
           return "klaida";
