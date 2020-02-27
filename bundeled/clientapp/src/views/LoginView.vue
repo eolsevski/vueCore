@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Login</h1>
+        <h3>Type Yours credentials</h3>
         <login/>
     </div>
 </template>
@@ -14,3 +14,13 @@ components:{
 }    
 }
 </script>
+
+<style scoped>
+
+div{
+    display: flex;
+    flex-direction: column;
+    border: dashed red 1px;
+}
+
+</style>

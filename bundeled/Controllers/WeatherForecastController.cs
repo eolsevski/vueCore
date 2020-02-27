@@ -63,15 +63,21 @@ namespace bundeled.Controllers
                 claims: claims,
                 notBefore: DateTime.MinValue,*/
                 expires: DateTime.Now.AddMinutes(1),
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("12b6fb24-adb8-4ce5-aa49-79b265ebf256")), SecurityAlgorithms.HmacSha256));
+                signingCredentials: new SigningCredentials(
+                    new SymmetricSecurityKey(Encoding.ASCII.GetBytes("12b6fb24-adb8-4ce5-aa49-79b265ebf256")),
+                    SecurityAlgorithms.HmacSha256));
 
-            return Ok(tokenHandler.WriteToken(jwt));
-        }
+            return Ok(new { token = tokenHandler.WriteToken(jwt)});
+
+
+
+
+    }
         [Authorize]
         [HttpPost("secret")]
         public IActionResult Secret()
         {
-            return Ok("Top secret page");
+            return Ok("Top secret info");
         }
 
 
