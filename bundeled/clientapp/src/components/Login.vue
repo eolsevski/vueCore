@@ -3,15 +3,14 @@
     <input type="text" placeholder="username" v-model="userName" />
     <input type="password" placeholder="password" v-model="password" />
     <button class="login" @click="Login">Login</button>
-    <button class="logout" @click="Logout">Logout</button>
+    <lg class="lg" />
   </div>
 </template>
 
 <script>
-import Vue from "vue";
 import axios from "axios";
 
-export default Vue.extend({
+export default {
   data() {
     return {
       userName: "",
@@ -37,22 +36,26 @@ export default Vue.extend({
         /* eslint-disable no-console */
         console.log(response.data.token);
         /* eslint-enable no-console */ 
+        document.location.href=localStorage.getItem('fromLocation');
+
         })
       .catch(function(error) {
         /* eslint-disable no-console */
         console.log('errorMsg: ' + error);
         /* eslint-enable no-console */
-        })
-        ;
-      
-      
+        
+        });
     },
     Logout: function() {
       localStorage.removeItem("token");
       this.token = "undefined";
     }
   }
-});
+  
+  
+};
+
+
 </script>
 
 <style scoped>
@@ -63,9 +66,7 @@ export default Vue.extend({
 
   display: flex;
   flex-direction: column;
-
   max-width: 150px;
-
   align-self: center;
 }
 button {
@@ -78,24 +79,20 @@ button {
 
   margin: 3px;
 
-  width: 70%;
+  width: 100px;
 }
 .login {
   -webkit-text-stroke-color: var(--greenLocal);
   border: 0.3px solid var(--greenLocal);
   align-self: flex-start;
 }
-
-.logout {
-  -webkit-text-stroke-color: var(--redLocal);
-  border: 0.3px solid var(--redLocal);
-  align-self: flex-end;
-}
-
 input {
   border: var(--blueLocal) 0.3px solid;
   margin: 3px;
   font-size: 12pt;
+}
+.lg{
+  align-self: flex-end;
 }
 ::placeholder {
   color: var(--blueLocal);

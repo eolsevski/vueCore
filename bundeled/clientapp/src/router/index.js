@@ -45,6 +45,11 @@ router.beforeEach((to, from, next) =>{
   const publicPages = ['/login','/'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('token');
+  localStorage.setItem('from', document.referrer);
+  localStorage.setItem('to',to.path);
+  localStorage.setItem('next',next);
+
+
 
   if (authRequired && !loggedIn) {
     return next('/login');
@@ -53,5 +58,9 @@ router.beforeEach((to, from, next) =>{
   next();
 }
 )
+
+
+
+
 
 export default router

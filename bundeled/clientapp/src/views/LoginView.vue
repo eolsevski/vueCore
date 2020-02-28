@@ -16,7 +16,6 @@ components:{
 </script>
 
 <style scoped>
-
 div{
     display: flex;
     flex-direction: column;
