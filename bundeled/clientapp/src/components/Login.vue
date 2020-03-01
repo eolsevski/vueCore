@@ -3,22 +3,22 @@
     <input type="text" placeholder="username" v-model="userName" />
     <input type="password" placeholder="password" v-model="password" />
     <button class="login" @click="Login">Login</button>
-    <lg class="lg" />
+    <logout class="lg" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import router from "../router";
 
 export default {
   data() {
     return {
       userName: "",
       password: "",
-      token: "undefined"
     };
   },
-  methods: { 
+  methods: {
     Login: async function() {
       const options = {
         method: "post",
@@ -29,33 +29,32 @@ export default {
         }
       };
       
-      await axios(options)
-      .then(function(response) {
-        //this.token = response.data.token;
-        localStorage.setItem("token", response.data.token);
-        /* eslint-disable no-console */
-        console.log(response.data.token);
-        /* eslint-enable no-console */ 
-        document.location.href=localStorage.getItem('fromLocation');
-
+      const loged = await axios(options)
+        .then(function(response) {
+          
+          localStorage.setItem("token", response.data.token);
+          
+          router.push(localStorage.getItem("to"));
+          return true;
         })
-      .catch(function(error) {
-        /* eslint-disable no-console */
-        console.log('errorMsg: ' + error);
-        /* eslint-enable no-console */
-        
+        .catch(function(error) {
+          /* eslint-disable no-console */
+          console.log("errorMsg: " + error);
+          /* eslint-enable no-console */
+          return false;
         });
+        if(loged)
+        this.$store.commit('loged');
+        else
+        this.$store.commit('unloged');
+
     },
     Logout: function() {
-      localStorage.removeItem("token");
-      this.token = "undefined";
+      this.$store.commit("loged");
+      localStorage.token = "undefined";
     }
   }
-  
-  
 };
-
-
 </script>
 
 <style scoped>
@@ -91,7 +90,7 @@ input {
   margin: 3px;
   font-size: 12pt;
 }
-.lg{
+.lg {
   align-self: flex-end;
 }
 ::placeholder {

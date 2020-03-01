@@ -1,28 +1,40 @@
 <template>
-
-    <button class="logout" @click="Logout">Logout</button>
+  <button v-show='this.$store.state.lgn' class="logout" @click="Logout">Logout</button>
 </template>
 
 <script>
-//import Vue from 'vue'
+
+
 
 export default {
+  data(){ return {vsbl: this.$store.state.logedIn}
+  },
   methods: {
-      Logout: function() {
+    Logout: function() {
       localStorage.removeItem("token");
       this.token = "undefined";
-      document.location.href='/';
+      //document.location.href='/';
+      this.$router.push("/");
+       this.$store.commit('unloged');
+    },
+   logedIn: function() {
+     //todo refactor
+      if(localStorage.getItem("token")==null) return false;
+     
+      return true;
     }
+  },
+  computed: {
+    
   }
-  
-}
+};
 </script>
 
 <style scoped>
-div{
-    display: flex;
-    flex-direction: column;
-    }
+div {
+  display: flex;
+  flex-direction: column;
+}
 button {
   color: transparent;
   -webkit-text-stroke-width: 0.3px;
