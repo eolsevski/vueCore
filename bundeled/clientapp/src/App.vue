@@ -5,16 +5,41 @@
         <router-link to="/">Home</router-link>|
         <router-link to="/about">About</router-link>|
         <router-link to="/secret">Secret</router-link>
-      <logout class="main-app-logout" />
+        <logout v-if="loged" class="main-app-logout" @logOut="logOut" />
+        
       </div>
-      
     </div>
 
-    <router-view />
+    <router-view  @logedIn="logedIn"/>
   </div>
 </template>
 
-
+<script>
+export default {
+  data(){return{
+    loged: false
+  }},
+  mounted:function(){
+    this.checkLogedInStatus()
+  },
+  methods: {
+    logOut: function(){
+      this.loged = false;
+    },
+    logedIn: function(){
+      this.loged = true;
+    },
+    checkLogedInStatus: function(){
+      
+      if(localStorage.getItem('token')=='undefined') return;
+      if(localStorage.getItem('token')==null) return;
+      this.loged = true;
+      
+    }
+  },
+  
+}
+</script>
 
 <style>
 body {

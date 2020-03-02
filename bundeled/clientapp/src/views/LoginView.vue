@@ -1,19 +1,29 @@
 <template>
     <div>
         <h3>Type Yours credentials</h3>
-        <login/>
+        <login @logedIn="logIn"/>
     </div>
 </template>
 
+
 <script>
+
 import Login from '@/components/Login.vue'
 
 export default {
-components:{
+    components:{
     Login
-}    
+} ,
+  methods: {
+      logIn: function(){
+        this.$emit('logedIn');
+      }
+    },
 }
 </script>
+
+
+
 
 <style scoped>
 div{

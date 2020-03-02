@@ -4,6 +4,7 @@
     <input type="password" placeholder="password" v-model="password" />
     <button class="login" @click="Login">Login</button>
     <logout class="lg" />
+    
   </div>
 </template>
 
@@ -15,7 +16,7 @@ export default {
   data() {
     return {
       userName: "",
-      password: "",
+      password: ""
     };
   },
   methods: {
@@ -28,13 +29,13 @@ export default {
           password: this.password
         }
       };
-      
+
       const loged = await axios(options)
         .then(function(response) {
-          
           localStorage.setItem("token", response.data.token);
-          
+
           router.push(localStorage.getItem("to"));
+
           return true;
         })
         .catch(function(error) {
@@ -43,11 +44,11 @@ export default {
           /* eslint-enable no-console */
           return false;
         });
-        if(loged)
-        this.$store.commit('loged');
-        else
-        this.$store.commit('unloged');
-
+        
+      if (loged) {
+        this.$store.commit("loged");
+        this.$emit("logedIn");
+      } else this.$store.commit("unloged");
     },
     Logout: function() {
       this.$store.commit("loged");

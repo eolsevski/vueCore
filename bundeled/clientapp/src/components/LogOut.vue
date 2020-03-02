@@ -13,9 +13,10 @@ export default {
     Logout: function() {
       localStorage.removeItem("token");
       this.token = "undefined";
-      //document.location.href='/';
+      document.location.href='/';
       this.$router.push("/");
-       this.$store.commit('unloged');
+      this.$store.commit('unloged');
+       this.$emit('logOut');
     },
    logedIn: function() {
      //todo refactor
