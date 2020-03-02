@@ -1,0 +1,15 @@
+<template>
+  <div class="upload">
+    <upload/>
+  </div>
+</template>
+
+
+<script>
+import upload from '../components/upload'
+export default {
+    components:{
+        upload
+    }
+}
+</script>

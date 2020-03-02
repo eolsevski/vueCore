@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import Login from '../views/LoginView'
 import Secret from '../views/SecretView'
+import upload from '../views/uploadView'
 
 
 Vue.use(VueRouter)
@@ -30,6 +31,11 @@ const routes = [{
         path: '/secret',
         name: 'Secret',
         component: Secret
+    },
+    {
+        path: '/upload',
+        name: 'Upload',
+        component: upload
     }
 
 ]

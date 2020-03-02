@@ -4,10 +4,12 @@ import router from './router';
 import { store } from './store';
 import Vuex from 'vuex';
 
+
 import '@/components'
 
 Vue.config.productionTip = false
 Vue.use(Vuex);
+
 
 new Vue({
     router,
