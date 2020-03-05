@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Domain.Auth
+namespace Core.Domain.User.Auth
 {
     public class AuthenticateModel
     {

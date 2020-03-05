@@ -7,7 +7,7 @@ import Vuex from 'vuex';
 
 import '@/components'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 Vue.use(Vuex);
 
 

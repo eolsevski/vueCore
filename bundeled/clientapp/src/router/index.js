@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import Login from '../views/LoginView'
-import Secret from '../views/SecretView'
 import upload from '../views/uploadView'
 
 
@@ -30,7 +29,8 @@ const routes = [{
     {
         path: '/secret',
         name: 'Secret',
-        component: Secret
+        component: () =>
+        import ( /* webpackChunkName: "about" */ '../views/SecretView')
     },
     {
         path: '/upload',

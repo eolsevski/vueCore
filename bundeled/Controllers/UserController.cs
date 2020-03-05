@@ -6,8 +6,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Domain.Auth;
-using Core.Domain.DomainServices;
+using Core.Domain.User.Auth;
+using Core.Domain.User.DomainServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,11 +20,6 @@ namespace bundeled.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<UserController> _logger;
         private IUserService _userServices;
 
@@ -36,34 +31,16 @@ namespace bundeled.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
-
         [HttpPost("login")]
         public IActionResult Login([FromBody] AuthenticateModel model)
         {
+            if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password)) return Unauthorized();
+
+            var user = _userServices.Authenticate(model.Username, model.Password);
+
+            if (user == null) return Unauthorized();
+            
             var tokenHandler = new JwtSecurityTokenHandler();
-
-            /*var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Expires = DateTime.Now.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123")), SecurityAlgorithms.HmacSha512Signature),
-            };*/
-
-            /*var claims = new[]
-            {
-                new Claim(ClaimTypes.Role, "Grandpa"),
-            };*/
 
             var jwt = new JwtSecurityToken(
                 /*issuer: "myissuer",
@@ -76,10 +53,6 @@ namespace bundeled.Controllers
 
                     SecurityAlgorithms.HmacSha256));
             
-             var user = _userServices.Authenticate(model.Username, model.Password);
-            
-            if (user == null) return Unauthorized();
-
             user.Token = tokenHandler.WriteToken(jwt);
 
             return Ok(new { token = user.Token });

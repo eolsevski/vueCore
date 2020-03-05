@@ -1,19 +1,15 @@
-﻿using Core.Domain.Auth;
-using Core.Helpers;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
+using Core.Helpers;
 
-namespace Core.Domain.DomainServices
+namespace Core.Domain.User.DomainServices
 {
     public class UserServices : IUserService
     {
 
-        private List<User> _users = new List<User> { User.Create(1, "firstName", "lastName", "example@example.com", "userName", "password", "")
+        private List<Domain.User.User> _users = new List<Domain.User.User> { Domain.User.User.Create(1, "firstName", "lastName", "example@example.com", "userName", "password", "")
         };
         private readonly AppSettings _appSettings;
 
@@ -21,7 +17,7 @@ namespace Core.Domain.DomainServices
         {
         }
 
-        public User Authenticate(string username, string password)
+        public Domain.User.User Authenticate(string username, string password)
         {
             var user = _users.SingleOrDefault(x => x.UserName == username && x.Password == password);
 
@@ -31,17 +27,17 @@ namespace Core.Domain.DomainServices
 
             var key = Encoding.ASCII.GetBytes("12b6fb24-adb8-4ce5-aa49-79b265ebf256");
 
-            var jwt = new JwtSecurityToken(
+            /*var jwt = new JwtSecurityToken(
             /*issuer: "myissuer",
             audience: "myaudience",
             claims: claims,
-            notBefore: DateTime.MinValue,*/
+            notBefore: DateTime.MinValue,#1#
             expires: DateTime.Now.AddMinutes(1),
             signingCredentials: new SigningCredentials(
                 new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256));
 
-            user.Token = tokenHandler.WriteToken(jwt);
+            user.Token = tokenHandler.WriteToken(jwt);*/
 
             return user.WithoutPassword();
         }
@@ -50,6 +46,6 @@ namespace Core.Domain.DomainServices
 
     public interface IUserService
     {
-        User Authenticate(string username, string password);
+        Domain.User.User Authenticate(string username, string password);
     }
 }

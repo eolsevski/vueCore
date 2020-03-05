@@ -17,6 +17,7 @@ export default {
   methods: {
       logIn: function(){
         this.$emit('logedIn');
+        
       }
     },
 }

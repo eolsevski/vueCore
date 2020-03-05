@@ -1,5 +1,5 @@
 <template>
-  <button v-show='this.$store.state.lgn' class="logout" @click="Logout">Logout</button>
+  <button  class="logout" @click="Logout">Logout</button>
 </template>
 
 <script>
@@ -7,14 +7,12 @@
 
 
 export default {
-  data(){ return {vsbl: this.$store.state.logedIn}
-  },
+  
   methods: {
     Logout: function() {
       localStorage.removeItem("token");
       this.token = "undefined";
-      document.location.href='/';
-      this.$router.push("/");
+      this.$router.forward("/");
       this.$store.commit('unloged');
        this.$emit('logOut');
     },

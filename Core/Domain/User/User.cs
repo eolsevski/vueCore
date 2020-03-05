@@ -1,4 +1,4 @@
-﻿namespace Core.Domain.Auth
+﻿namespace Core.Domain.User
 {
     public class User
     {
@@ -6,11 +6,12 @@
         public string FirstName;
         public string LastName;
         public string Email;
-        public string UserName;
+        public readonly string UserName;
         public string Password;
+        //public string Role;
         public string Token;
 
-        public User(int id, string firstName, string lastName, string email, string userName, string password, string token )
+        private User(int id, string firstName, string lastName, string email, string userName, string password, string token )
         {
             FirstName = firstName;
             LastName = lastName;
