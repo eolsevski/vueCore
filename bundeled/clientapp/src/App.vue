@@ -5,38 +5,38 @@
         <router-link to="/">Home</router-link>|
         <router-link to="/about">About</router-link>|
         <router-link to="/secret">Secret</router-link>|
-        
-        <logout v-if="loged" class="main-app-logout" @logOut="logOut" />
-        
+        <router-link class='login' v-if="!loged" to="/login">Login</router-link>
+        <a style="cursor: pointer;color:red" class='logout' v-if="loged"  v-on:click="Logout">Logout</a>
       </div>
     </div>
 
-    <router-view  @logedIn="logedIn"/>
+    <router-view/>
   </div>
 </template>
 
 <script>
 export default {
   data(){return{
-    loged: false
+    loged:false
   }},
+  
   mounted:function(){
-    this.checkLogedInStatus()
+    this.loged = this.checkLogedInStatus()
+  },
+  updated:function(){
+    this.loged = this.checkLogedInStatus()
   },
   methods: {
-    logOut: function(){
-      this.loged = false;
-    },
-    logedIn: function(){
-      this.loged = true;
-    },
     checkLogedInStatus: function(){
-      
-      if(localStorage.getItem('token')=='undefined') return;
-      if(localStorage.getItem('token')==null) return;
-      this.loged = true;
-      
-    }
+      if(localStorage.getItem('token')=='undefined') return false;
+      if(localStorage.getItem('token')==null) return false;
+      return true;
+    },
+    Logout: function() {
+      localStorage.removeItem("token");
+      this.$router.push("/");
+      this.loged = false;
+    }  
   },
   
 }
@@ -48,12 +48,7 @@ body {
   --redLocal: #b00;
   --greenLocal: #9acd32;
 }
-.main-app-logout {
-  border: red dashe 2px;
-  position: absolute;
-  top: 20px;
-  right: 0;
-}
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -62,7 +57,6 @@ body {
   color: #2c3e50;
 }
 #nav {
-  border: red dashe 2px;
   display: flex;
 }
 
@@ -74,15 +68,18 @@ body {
 
   width: 100%;
 }
-#buttons .lg:last-child {
-  margin-left: auto;
-}
+
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
 
+
+
 #nav a.router-link-exact-active {
   color: #9acd32;
+}
+.logout{
+  color: var(--redLocal);
 }
 </style>

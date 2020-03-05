@@ -30,12 +30,18 @@ const routes = [{
         path: '/secret',
         name: 'Secret',
         component: () =>
-        import ( /* webpackChunkName: "about" */ '../views/SecretView')
+            import ( /* webpackChunkName: "about" */ '../views/SecretView')
     },
     {
         path: '/upload',
         name: 'Upload',
         component: upload
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../components/LogOut')
     }
 
 ]
@@ -58,6 +64,7 @@ router.beforeEach((to, from, next) => {
     if (authRequired && !loggedIn) {
         return next('/login');
     }
+
 
     next();
 })

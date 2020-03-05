@@ -3,7 +3,7 @@
     <input type="text" placeholder="username" v-model="userName" />
     <input type="password" placeholder="password" v-model="password" />
     <button class="login" @click="Login">Login</button>
-    <logout class="lg" />
+    
   </div>
 </template>
 
@@ -14,8 +14,8 @@ import router from "../router";
 export default {
   data() {
     return {
-      userName: "",
-      password: ""
+      userName: "userName",
+      password: "password"
     };
   },
   methods: {
@@ -28,33 +28,18 @@ export default {
           password: this.password
         }
       };
-
-      const loged = 
-
       await axios(options)
         .then(function(response) {
           localStorage.setItem("token", response.data.token);
           router.push(localStorage.getItem("to"));
-          return true;
         })
         .catch(function(error) {
           /* eslint-disable no-console */
           console.log("errorMsg: " + error);
           /* eslint-enable no-console */
-          return false;
         });
-
-       if (loged) {
-         this.$store.commit("loged");
-         this.$emit("logedIn");
-       }
-      // else {
-      //   this.$store.commit("unloged");
-      //   this.$emit("logOut");
-      // }
     },
     Logout: function() {
-      this.$store.commit("loged");
       localStorage.token = "undefined";
     }
   }

@@ -1,54 +1,6 @@
 <template>
-  <button  class="logout" @click="Logout">Logout</button>
+  <div></div>
 </template>
 
-<script>
 
 
-
-export default {
-  
-  methods: {
-    Logout: function() {
-      localStorage.removeItem("token");
-      this.token = "undefined";
-      this.$router.forward("/");
-      this.$store.commit('unloged');
-       this.$emit('logOut');
-    },
-   logedIn: function() {
-     //todo refactor
-      if(localStorage.getItem("token")==null) return false;
-     
-      return true;
-    }
-  },
-  computed: {
-    
-  }
-};
-</script>
-
-<style scoped>
-div {
-  display: flex;
-  flex-direction: column;
-}
-button {
-  color: transparent;
-  -webkit-text-stroke-width: 0.3px;
-
-  font-size: 17pt;
-
-  background: transparent;
-
-  margin: 3px;
-
-  width: 100px;
-}
-.logout {
-  -webkit-text-stroke-color: var(--redLocal);
-  border: 0.3px solid var(--redLocal);
-  align-self: flex-end;
-}
-</style>
