@@ -1,45 +1,82 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <div id="buttons">
-        <router-link to="/">Home</router-link>|
-        <router-link to="/about">About</router-link>|
-        <router-link to="/secret">Secret</router-link>|
-        <router-link class='login' v-if="!loged" to="/login">Login</router-link>
-        <a style="cursor: pointer;color:red" class='logout' v-if="loged"  v-on:click="Logout">Logout</a>
-      </div>
-    </div>
+    <nav id="nav" class="navbar navbar-expand-sm navbar-light bg-light">
+      
 
-    <router-view/>
+      <a class="navbar-brand" href="/about">N</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item active">
+            <router-link class="nav-link active" to="/">Home <span class="sr-only">(current)Home</span></router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link active" to="/about">About</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link active" to="/secret">Secret</router-link>
+          </li>
+        </ul>
+
+
+        <form class="form-inline my-1 my-sm-0">
+          <router-link class="form-control mr-sm-1" v-if="!loged" to="/login">Login</router-link>
+          <a
+            class="form-control mr-sm-1"
+            style="cursor: pointer;color:red"
+            v-if="loged"
+            v-on:click="Logout"
+          >Logout</a>
+        </form>
+      </div>
+
+
+
+    </nav>
+
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  data(){return{
-    loged:false
-  }},
-  
-  mounted:function(){
-    this.loged = this.checkLogedInStatus()
+  data() {
+    return {
+      loged: false
+    };
   },
-  updated:function(){
-    this.loged = this.checkLogedInStatus()
+
+  mounted: function() {
+    this.loged = this.checkLogedInStatus();
+  },
+  updated: function() {
+    this.loged = this.checkLogedInStatus();
   },
   methods: {
-    checkLogedInStatus: function(){
-      if(localStorage.getItem('token')=='undefined') return false;
-      if(localStorage.getItem('token')==null) return false;
+    checkLogedInStatus: function() {
+      if (localStorage.getItem("token") == "undefined") return false;
+      if (localStorage.getItem("token") == null) return false;
       return true;
     },
     Logout: function() {
       localStorage.removeItem("token");
       this.$router.push("/");
       this.loged = false;
-    }  
-  },
-  
-}
+    }
+  }
+};
 </script>
 
 <style>
@@ -56,30 +93,13 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-#nav {
-  display: flex;
-}
-
-#buttons {
-  padding: 30px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  width: 100%;
-}
 
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
 
-
-
 #nav a.router-link-exact-active {
   color: #9acd32;
-}
-.logout{
-  color: var(--redLocal);
 }
 </style>
