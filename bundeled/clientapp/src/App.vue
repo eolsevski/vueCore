@@ -1,60 +1,65 @@
 <template>
   <div id="app">
-    <nav id="nav" class="navbar navbar-expand-sm navbar-light bg-light">
-      
+    <b-navbar toggleable="lg" type="dark" :variant="color">
+      <b-navbar-brand href="#">Gjensidige</b-navbar-brand>
 
-      <a class="navbar-brand" href="/about">N</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item active">
-            <router-link class="nav-link active" to="/">Home <span class="sr-only">(current)Home</span></router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link active" to="/about">About</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link active" to="/secret">Secret</router-link>
-          </li>
-        </ul>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <router-link class="nav-link active" to="/">Home</router-link>
+          <router-link class="nav-link active" to="/about">About</router-link>
+          <router-link class="nav-link active" to="/secret">Secret</router-link>
+        </b-navbar-nav>
 
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-form-input disabled size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-button disabled size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+          </b-nav-form>
 
-        <form class="form-inline my-1 my-sm-0">
-          <router-link class="form-control mr-sm-1" v-if="!loged" to="/login">Login</router-link>
-          <a
-            class="form-control mr-sm-1"
-            style="cursor: pointer;color:red"
-            v-if="loged"
-            v-on:click="Logout"
-          >Logout</a>
-        </form>
-      </div>
+          <b-nav-item-dropdown disabled text="Lang" right>
+            <b-dropdown-item href="#">EN</b-dropdown-item>
+            <b-dropdown-item href="#">ES</b-dropdown-item>
+            <b-dropdown-item href="#">RU</b-dropdown-item>
+            <b-dropdown-item href="#">FA</b-dropdown-item>
+          </b-nav-item-dropdown>
 
+          <b-nav-item-dropdown  text="Color" right>
+            <b-dropdown-item v-for="color in colorVariants" :key="color" @click="setColorSchema(color)">{{color}}</b-dropdown-item>
+          </b-nav-item-dropdown>
 
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template v-slot:button-content>
+              <em>User</em>
+            </template>
+            <!-- <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item href="#">Sign Out</b-dropdown-item> -->
+            <b-dropdown-item class="b-dropdown-item" @click="this.$router.push('/login') " v-if="!loged" to="/login">Login</b-dropdown-item>
+            <b-dropdown-item class="b-dropdown-item" style="cursor: pointer;color:red" v-if="loged" v-on:click="Logout" >Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
 
-    </nav>
-
-    <router-view />
+<div class="content-view">
+    <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+
 export default {
   data() {
     return {
-      loged: false
+      loged: false,
+      colorVariants:['primary', 'success', 'info', 'warning', 'danger', 'dark', 'light'],
+      color:'primary'
     };
   },
 
@@ -65,6 +70,9 @@ export default {
     this.loged = this.checkLogedInStatus();
   },
   methods: {
+    setColorSchema:function(color){
+      this.color=color;
+    },
     checkLogedInStatus: function() {
       if (localStorage.getItem("token") == "undefined") return false;
       if (localStorage.getItem("token") == null) return false;
@@ -80,26 +88,9 @@ export default {
 </script>
 
 <style>
-body {
-  --blueLocal: #9dabd4;
-  --redLocal: #b00;
-  --greenLocal: #9acd32;
-}
-
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.content-view{
+  display: flex;
+  justify-content:center;
   text-align: center;
-  color: #2c3e50;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #9acd32;
 }
 </style>

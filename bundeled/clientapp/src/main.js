@@ -5,7 +5,17 @@ import { store } from './store';
 import Vuex from 'vuex';
 
 
-import '@/components'
+import '@/components';
+
+
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+
+
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);
