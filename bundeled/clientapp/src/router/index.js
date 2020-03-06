@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import Login from '../views/LoginView'
-import upload from '../views/uploadView'
 
 
 Vue.use(VueRouter)
@@ -35,7 +34,8 @@ const routes = [{
     {
         path: '/upload',
         name: 'Upload',
-        component: upload
+        component: () =>
+        import ( /* webpackChunkName: "about" */ '../views/uploadView')
     },
     {
         path: '/logout',

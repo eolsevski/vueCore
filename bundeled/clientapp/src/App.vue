@@ -8,8 +8,9 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <router-link class="nav-link active" to="/">Home</router-link>
-          <router-link class="nav-link active" to="/about">About</router-link>
-          <router-link class="nav-link active" to="/secret">Secret</router-link>
+          <router-link v-if="loged" class="nav-link active" to="/about">About</router-link>
+          <router-link v-if="loged" class="nav-link active" to="/secret">Secret</router-link>
+          <router-link v-if="loged" class="nav-link active" to="/upload">Upload</router-link>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -58,7 +59,7 @@ export default {
   data() {
     return {
       loged: false,
-      colorVariants:['primary', 'success', 'info', 'warning', 'danger', 'dark', 'light'],
+      colorVariants:['primary', 'success', 'info', 'warning', 'danger', 'dark'],
       color:'primary'
     };
   },
