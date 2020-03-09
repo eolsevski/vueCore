@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
+using Core.Domain.User.Auth;
 using Core.Helpers;
 
 namespace Core.Domain.User.DomainServices
@@ -9,7 +10,7 @@ namespace Core.Domain.User.DomainServices
     public class UserServices : IUserService
     {
 
-        private List<Domain.User.User> _users = new List<Domain.User.User> { Domain.User.User.Create(1, "firstName", "lastName", "example@example.com", "userName", "password", "")
+        private List<User> _users = new List<User> { User.Create(1, "firstName", "lastName", "example@example.com", "userName", "password", "")
         };
         private readonly AppSettings _appSettings;
 
@@ -17,27 +18,20 @@ namespace Core.Domain.User.DomainServices
         {
         }
 
-        public Domain.User.User Authenticate(string username, string password)
+        public User Authenticate(string username, string password)
         {
             var user = _users.SingleOrDefault(x => x.UserName == username && x.Password == password);
 
             if (user == null) return null;
+            
+            return user.WithoutPassword();
+        }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+        public User Create(RegisterModelDto model)
+        {
+            User user = User.Create(2,model.FirstName,model.SecondName,model.Email, model.UserName,model.Password,"");
 
-            var key = Encoding.ASCII.GetBytes("12b6fb24-adb8-4ce5-aa49-79b265ebf256");
-
-            /*var jwt = new JwtSecurityToken(
-            /*issuer: "myissuer",
-            audience: "myaudience",
-            claims: claims,
-            notBefore: DateTime.MinValue,#1#
-            expires: DateTime.Now.AddMinutes(1),
-            signingCredentials: new SigningCredentials(
-                new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha256));
-
-            user.Token = tokenHandler.WriteToken(jwt);*/
+            _users.Add(user);
 
             return user.WithoutPassword();
         }
@@ -47,5 +41,6 @@ namespace Core.Domain.User.DomainServices
     public interface IUserService
     {
         Domain.User.User Authenticate(string username, string password);
+        User Create(RegisterModelDto model);
     }
 }

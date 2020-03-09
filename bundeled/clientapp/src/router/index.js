@@ -35,13 +35,19 @@ const routes = [{
         path: '/upload',
         name: 'Upload',
         component: () =>
-        import ( /* webpackChunkName: "about" */ '../views/uploadView')
+            import ( /* webpackChunkName: "about" */ '../views/uploadView')
     },
     {
         path: '/logout',
         name: 'Logout',
         component: () =>
             import ( /* webpackChunkName: "about" */ '../components/LogOut')
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/RegisterView')
     }
 
 ]

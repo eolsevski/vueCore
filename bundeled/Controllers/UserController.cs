@@ -85,6 +85,13 @@ namespace bundeled.Controllers
             return Ok(new { count = files.Count, size });
         }
 
+        [HttpPost("register")]
+        public IActionResult RegisterNewUser([FromBody] RegisterModelDto model)
+        {
+            _userServices.Create(model);
+
+            return Ok("registered");
+        }
 
     }
 }

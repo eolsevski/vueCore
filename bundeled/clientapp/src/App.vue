@@ -11,6 +11,7 @@
           <router-link v-if="loged" class="nav-link active" to="/about">About</router-link>
           <router-link v-if="loged" class="nav-link active" to="/secret">Secret</router-link>
           <router-link v-if="loged" class="nav-link active" to="/upload">Upload</router-link>
+          <router-link v-if="loged" class="nav-link active" to="/register">Register</router-link>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
