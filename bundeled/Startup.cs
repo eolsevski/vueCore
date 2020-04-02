@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Core.Domain.FileService;
 using Core.Domain.User.DomainServices;
 using VueCliMiddleware;
 
@@ -47,6 +48,7 @@ namespace bundeled
                     };
                 });
             services.AddScoped<IUserService, UserServices>();
+            services.AddScoped<IFileService, FileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,10 +2,6 @@
   <div>
     <label>{{message}}</label>
     <button @click="getMessage">get it</button>
-
-
-
-    
   </div>
 </template>
 

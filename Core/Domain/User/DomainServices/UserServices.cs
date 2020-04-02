@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using Core.Domain.User.Auth;
+using Core.Domain.User.Persistence;
 using Core.Helpers;
 
 namespace Core.Domain.User.DomainServices
@@ -10,29 +12,44 @@ namespace Core.Domain.User.DomainServices
     public class UserServices : IUserService
     {
 
-        private List<User> _users = new List<User> { User.Create(1, "firstName", "lastName", "example@example.com", "userName", "password", "")
-        };
+        
         private readonly AppSettings _appSettings;
 
-        public UserServices()
-        {
-        }
+        
 
         public User Authenticate(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.UserName == username && x.Password == password);
+            try
+            {
+                using (var db = new UserContext())
+                {
+                    var _users = db.Users.ToList();
 
-            if (user == null) return null;
-            
-            return user.WithoutPassword();
+                    var user = _users.SingleOrDefault(x => x.UserName == username && x.Password == password);
+
+                    if (user == null) return null;
+
+                    return user.WithoutPassword();
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public User Create(RegisterModelDto model)
         {
-            User user = User.Create(2,model.FirstName,model.SecondName,model.Email, model.UserName,model.Password,"");
+            User user = User.Create(0,model.FirstName,model.LastName,model.Email, model.UserName,model.Password, model.Role,"");
 
-            _users.Add(user);
+            using (var db = new UserContext())
+            {
+                Console.WriteLine("inserting");
+                db.Add(User.Create(0, model.FirstName, model.LastName, model.Email, model.UserName, model.Password, model.Role, ""));
+                db.SaveChanges();
 
+                var all = db.Users.OrderByDescending(b=>b.UserName).ToList();
+            }
             return user.WithoutPassword();
         }
 
@@ -40,7 +57,7 @@ namespace Core.Domain.User.DomainServices
 
     public interface IUserService
     {
-        Domain.User.User Authenticate(string username, string password);
+        User Authenticate(string username, string password);
         User Create(RegisterModelDto model);
     }
 }

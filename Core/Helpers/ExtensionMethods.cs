@@ -15,8 +15,9 @@ namespace Core.Helpers
 
         public static User WithoutPassword(this User user)
         {
-            user.Password = null;
-            return user;
+            //ASAP finish it
+            //user.Password = null;
+            return user.GetUserWithNulledPassword();
         }
     }
 }

@@ -8,7 +8,7 @@
 
 <script>
 
-import Register from '@/components/Register.vue'
+import Register from '../LogInOutRegister/Register'
 
 export default {
     components:{

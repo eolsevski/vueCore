@@ -11,7 +11,6 @@
           <router-link v-if="loged" class="nav-link active" to="/about">About</router-link>
           <router-link v-if="loged" class="nav-link active" to="/secret">Secret</router-link>
           <router-link v-if="loged" class="nav-link active" to="/upload">Upload</router-link>
-          <router-link v-if="loged" class="nav-link active" to="/register">Register</router-link>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -39,7 +38,8 @@
             </template>
             <!-- <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#">Sign Out</b-dropdown-item> -->
-            <b-dropdown-item class="b-dropdown-item" @click="this.$router.push('/login') " v-if="!loged" to="/login">Login</b-dropdown-item>
+            <b-dropdown-item class="b-dropdown-item"  v-if="!loged" to="/login">Login</b-dropdown-item>
+            <b-dropdown-item class="b-dropdown-item"  v-if="!loged" to="/register">Register</b-dropdown-item>
             <b-dropdown-item class="b-dropdown-item" style="cursor: pointer;color:red" v-if="loged" v-on:click="Logout" >Logout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -55,38 +55,59 @@
 <script>
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import axios from 'axios';
+import prepare_request from "./helpers/prepare_request";
 
 export default {
   data() {
     return {
       loged: false,
       colorVariants:['primary', 'success', 'info', 'warning', 'danger', 'dark'],
-      color:'primary'
+      color:'primary', 
+      tmp:""
     };
   },
 
-  mounted: function() {
-    this.loged = this.checkLogedInStatus();
+  mounted: async function() {
+    this.loged = await this.checkLogedInStatus();
   },
-  updated: function() {
-    this.loged = this.checkLogedInStatus();
+  updated: async function() {
+    this.loged = await this.checkLogedInStatus();
   },
   methods: {
     setColorSchema:function(color){
       this.color=color;
     },
-    checkLogedInStatus: function() {
+    checkLogedInStatus: async  function() {
       if (localStorage.getItem("token") == "undefined") return false;
       if (localStorage.getItem("token") == null) return false;
-      return true;
+
+       /*eslint-disable no-console*/
+       return await  axios(prepare_request('/user/checktoken'))
+      .then(function () { 
+        return true
+        })
+      .catch(function () {
+        localStorage.removeItem("token");
+        if(this.$router.currentRoute.path!='/')
+      {
+        this.$router.push("/");
+      }
+        return false
+        })      ;
     },
+
     Logout: function() {
       localStorage.removeItem("token");
-      this.$router.push("/");
+    
+      if(this.$router.currentRoute.path!='/')
+      {
+        this.$router.push("/");
+      }
       this.loged = false;
     }
   }
-};
+}
 </script>
 
 <style>

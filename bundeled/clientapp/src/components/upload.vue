@@ -77,14 +77,9 @@ import axios from 'axios';
 
 
       upload:function(formData) {
-    const url = `${BASE_URL}/user/upload`;
+    const url = `${BASE_URL}/file/upload`;
     return axios.post(url, formData)
-        // get data
         .then(x => x.data)
-        // add url field
-        // .then(x => x.map(img => Object.assign({},
-        //     img, { url: `${BASE_URL}/images/${img.id}` })))
-            
             ;
 },
       reset() {
@@ -98,22 +93,14 @@ import axios from 'axios';
         this.currentStatus = STATUS_SAVING;
 
         this.upload(formData)
-          .then(this.wait(1500)) // DEV ONLY: wait for 1.5s 
+          //.then(this.wait(1500)) // DEV ONLY: wait for 1.5s 
           .then(x => {
-            /*eslint-disable no-console*/
-            console.log("x");
-            console.log(x);
-            /*eslint-enable no-console*/
             this.uploadedFiles = [].concat(x);
             this.currentStatus = STATUS_SUCCESS;
             
           })
           .catch(err => {
-            /*eslint-disable no-console*/
-            console.log(err);
-            /*eslint-enable no-console*/
             this.uploadError = err.response;
-            
             this.currentStatus = STATUS_FAILED;
           });
       },
@@ -122,16 +109,12 @@ import axios from 'axios';
         const formData = new FormData();
 
         if (!fileList.length) return;
-        /*eslint-disable no-console*/
-console.log(fileList);
-/*eslint-enable no-console*/
         // append the files to FormData
         Array
           .from(Array(fileList.length).keys())
           .map(x => {
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
-
         // save it
         this.save(formData);
       }

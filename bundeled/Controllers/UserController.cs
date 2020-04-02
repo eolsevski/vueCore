@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.Domain.FileService;
 using Core.Domain.User.Auth;
 using Core.Domain.User.DomainServices;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace bundeled.Controllers
 {
@@ -22,13 +17,13 @@ namespace bundeled.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private IUserService _userServices;
+        private IFileService _fileService;
 
-        public UserController(ILogger<UserController> logger
-            ,IUserService userServices
-            )
+        public UserController(ILogger<UserController> logger, IUserService userServices, IFileService fileService)
         {
             _userServices = userServices;
             _logger = logger;
+            _fileService = fileService;
         }
 
         [HttpPost("login")]
@@ -39,7 +34,7 @@ namespace bundeled.Controllers
             var user = _userServices.Authenticate(model.Username, model.Password);
 
             if (user == null) return Unauthorized();
-            
+
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var jwt = new JwtSecurityToken(
@@ -52,7 +47,7 @@ namespace bundeled.Controllers
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes("12b6fb24-adb8-4ce5-aa49-79b265ebf256")),
 
                     SecurityAlgorithms.HmacSha256));
-            
+
             user.Token = tokenHandler.WriteToken(jwt);
 
             return Ok(new { token = user.Token });
@@ -63,27 +58,6 @@ namespace bundeled.Controllers
         {
             return Ok("Top secret info");
         }
-        [HttpPost("upload")]
-        public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files)
-        {
-            long size = files.Sum(f => f.Length);
-
-            foreach (var formFile in files)
-            {
-                if (formFile.Length > 0)
-                {
-                    var filePath = Path.GetTempFileName();
-                    Console.WriteLine(filePath);
-                    await using var stream = System.IO.File.Create(filePath);
-                    await formFile.CopyToAsync(stream);
-                }
-            }
-
-            // Process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-
-            return Ok(new { count = files.Count, size });
-        }
 
         [HttpPost("register")]
         public IActionResult RegisterNewUser([FromBody] RegisterModelDto model)
@@ -91,6 +65,13 @@ namespace bundeled.Controllers
             _userServices.Create(model);
 
             return Ok("registered");
+        }
+
+        [Authorize]
+        [HttpPost("checkToken")]
+        public IActionResult CheckToken()
+        {
+            return Ok();
         }
 
     }

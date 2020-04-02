@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home'
-import Login from '../views/LoginView'
-
+import Home from '../components/Home/Home'
+import Login from '../LogInOutRegister/LoginView'
 
 Vue.use(VueRouter)
 
@@ -18,7 +17,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About')
+            import ( /* webpackChunkName: "about" */ '../components/About/About')
     },
     {
         path: '/login',
@@ -29,27 +28,20 @@ const routes = [{
         path: '/secret',
         name: 'Secret',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/SecretView')
+            import ( /* webpackChunkName: "secretView" */ '../views/SecretView')
     },
     {
         path: '/upload',
         name: 'Upload',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/uploadView')
-    },
-    {
-        path: '/logout',
-        name: 'Logout',
-        component: () =>
-            import ( /* webpackChunkName: "about" */ '../components/LogOut')
+            import ( /* webpackChunkName: "uploadView" */ '../views/uploadView')
     },
     {
         path: '/register',
         name: 'Register',
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/RegisterView')
+            import ( /* webpackChunkName: "about" */ '../LogInOutRegister/RegisterView')
     }
-
 ]
 
 const router = new VueRouter({
@@ -57,10 +49,8 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
-
-
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/'];
+    const publicPages = ['/login', '/', '/register'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('token');
     //remember last path before login, 
@@ -70,13 +60,6 @@ router.beforeEach((to, from, next) => {
     if (authRequired && !loggedIn) {
         return next('/login');
     }
-
-
     next();
 })
-
-
-
-
-
 export default router
