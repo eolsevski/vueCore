@@ -9,8 +9,6 @@ namespace Core.Domain.User
         public int Id { get; private set; }
         public User UserId { get; private set; }
         public string PathToUploads { get; private set; }
-     
         
-        //ASAP remove this line github: vdasus
     }
 }
