@@ -7,34 +7,34 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <router-link class="nav-link active" to="/">Home</router-link>
-          <router-link v-if="loged" class="nav-link active" to="/about">About</router-link>
-          <router-link v-if="loged" class="nav-link active" to="/secret">Secret</router-link>
-          <router-link v-if="loged" class="nav-link active" to="/upload">Upload</router-link>
+          <router-link class="nav-link active" to="/">{{$t("NavBar.Home")}}</router-link>
+          <router-link v-if="loged" class="nav-link active" to="/about">{{$t("NavBar.About")}}</router-link>
+          <router-link v-if="loged" class="nav-link active" to="/secret">{{$t("NavBar.Secret")}}</router-link>
+          <router-link v-if="loged" class="nav-link active" to="/upload">{{$t("NavBar.Upload")}}</router-link>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <b-form-input disabled size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-            <b-button disabled size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+            <b-form-input disabled size="sm" class="mr-sm-2" v-bind:placeholder=" $t('NavBar.Search') "></b-form-input>
+            <b-button disabled size="sm" class="my-2 my-sm-0" type="submit">{{$t("NavBar.Search")}}</b-button>
           </b-nav-form>
 
-          <b-nav-item-dropdown disabled text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
+          <b-nav-item-dropdown v-bind:text="$t('NavBar.Lang')" right> 
+            <b-dropdown-item v-on:click="setLocale('en')">EN</b-dropdown-item>
+            <b-dropdown-item v-on:click="setLocale('lt')">LT</b-dropdown-item>
             <b-dropdown-item href="#">RU</b-dropdown-item>
             <b-dropdown-item href="#">FA</b-dropdown-item>
           </b-nav-item-dropdown>
 
-          <b-nav-item-dropdown  text="Color" right>
+          <b-nav-item-dropdown  v-bind:text="$t('NavBar.Color')" right>
             <b-dropdown-item v-for="color in colorVariants" :key="color" @click="setColorSchema(color)">{{color}}</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <em>User</em>
+              <em>{{$t("NavBar.User")}}</em>
             </template>
             <!-- <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#">Sign Out</b-dropdown-item> -->
@@ -82,7 +82,7 @@ export default {
       if (localStorage.getItem("token") == "undefined") return false;
       if (localStorage.getItem("token") == null) return false;
 
-       /*eslint-disable no-console*/
+       
        return await  axios(prepare_request('/user/checktoken'))
       .then(function () { 
         return true
@@ -105,12 +105,23 @@ export default {
         this.$router.push("/");
       }
       this.loged = false;
+    },
+    setLocale(locate) {
+      this.$i18n.locale = locate
+      /*eslint-disable no-console*/
+    console.log(this.$i18n.locale);
+    /*eslint-enable no-console*/
     }
   }
 }
 </script>
 
 <style>
+:root{
+--blueLocal: #9dabd4;
+  --redLocal: #b00;
+  --greenLocal: #9acd32;
+}
 .content-view{
   display: flex;
   justify-content:center;

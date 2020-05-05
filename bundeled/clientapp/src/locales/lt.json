@@ -1,0 +1,19 @@
+{
+  "message": "labas i18n !!",
+  "NavBar":{
+    "Home": "Pradžia",
+    "About" : "Apie mus",
+    "Secret" : "Slaptas",
+    "Upload" : "Užkrauti",
+    "Search" : "Paieška",
+    "Lang" : "Kalba",
+    "Color" : "Spalva",
+    "User" : "Vartotojas"
+  },
+  "UploadFiles":{
+    "InputBoxMessage" : "Tempkite laimena(s) čia arba paspauskite, kad įkelti",
+    "Upload files" : "Laikmenų įkelimas",
+    "Uploading" : "Įkeliama { fileCount } laikmenų...",
+    "Uploaded" : "Įkelta { fileCount } laikmenų"
+  }
+}

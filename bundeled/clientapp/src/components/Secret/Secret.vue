@@ -8,7 +8,7 @@
 <script>
 import Vue from "vue";
 
-import prepare_request from "../helpers/prepare_request";
+import prepare_request from "@/helpers/prepare_request";
 
 import axios from "axios";
 

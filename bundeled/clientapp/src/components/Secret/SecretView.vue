@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import secret from '../components/Secret.vue'
+import Secret from './Secret'
 
 export default {
-    components:{secret}
+    components:{Secret}
 }
 </script>

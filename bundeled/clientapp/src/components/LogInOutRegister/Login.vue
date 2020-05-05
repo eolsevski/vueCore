@@ -47,11 +47,8 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  --blueLocal: #9dabd4;
-  --redLocal: #b00;
-  --greenLocal: #9acd32;
 
+.main {
   display: flex;
   flex-direction: column;
   max-width: 150px;
@@ -72,10 +69,16 @@ button {
 .login {
   -webkit-text-stroke-color: var(--greenLocal);
   border: 0.3px solid var(--greenLocal);
+  /* for IE */
+  -webkit-text-stroke-color: #9acd32;
+  border: 0.3px solid #9acd32;
+  
   align-self: flex-start;
 }
 input {
   border: var(--blueLocal) 0.3px solid;
+  /* for IE */
+  border: #9dabd4 0.3px solid;
   margin: 3px;
   font-size: 12pt;
 }
@@ -84,6 +87,8 @@ input {
 }
 ::placeholder {
   color: var(--blueLocal);
+  /* for IE */
+  color: #9dabd4;
   text-align: center;
 }
 </style>

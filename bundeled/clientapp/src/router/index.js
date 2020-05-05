@@ -28,13 +28,13 @@ const routes = [{
         path: '/secret',
         name: 'Secret',
         component: () =>
-            import ( /* webpackChunkName: "secretView" */ '../views/SecretView')
+            import ( /* webpackChunkName: "secretView" */ '../components/Secret/SecretView')
     },
     {
         path: '/upload',
         name: 'Upload',
         component: () =>
-            import ( /* webpackChunkName: "uploadView" */ '../views/uploadView')
+            import ( /* webpackChunkName: "uploadView" */ '@/components/Upload/uploadView')
     },
     {
         path: '/register',

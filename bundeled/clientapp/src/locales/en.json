@@ -1,0 +1,20 @@
+{
+  "message": "hello i18n !!",
+  "NavBar":{
+    "Home": "Home",
+    "About" : "About",
+    "Secret" : "Secret",
+    "Upload" : "Upload",
+    "Search" : "Search",
+    "Lang" : "Lang",
+    "Color" : "Color",
+    "User" : "User"
+  },
+  "UploadFiles":{
+    "InputBoxMessage" : "Drag your file(s){ test } here to begin or click to browse",
+    "Upload files" : "Upload files",
+    "Uploading" : "Uploading { fileCount } files...",
+    "Uploaded" : "Uploaded { fileCount } file(s) successfully"
+  
+  }
+}

@@ -6,7 +6,7 @@
 
 
 <script>
-import upload from '../components/upload'
+import upload from '@/components/Upload/upload'
 export default {
     components:{
         upload
