@@ -17,16 +17,14 @@ export default Vue.extend({
     return {
       message: "empty",
       url: "/user/secret",
-      options: ""
+      request: ""
     };
   },
   methods: {
     getMessage: async function() {
-      this.options = prepare_request(this.url);
+      this.request = prepare_request(this.url);
 
-      //prepare_request();
-      /*eslint-disable no-console*/
-      this.message = await axios(this.options)
+      this.message = await axios(this.request)
         .then(function(response) {
           return response.data;
         })
@@ -36,7 +34,7 @@ export default Vue.extend({
           }
           return "klaida";
         });
-      /*eslint-enable no-console*/
+      
     }
   }
 });

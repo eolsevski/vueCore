@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home/Home'
-import Login from '../LogInOutRegister/LoginView'
+import * as components from '../components/index'
 
 Vue.use(VueRouter)
 
@@ -13,34 +13,27 @@ const routes = [{
     {
         path: '/about',
         name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import ( /* webpackChunkName: "about" */ '../components/About/About')
+        component: ()=>Promise.resolve(components.About)
     },
     {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: ()=>Promise.resolve(components.Login)
     },
     {
         path: '/secret',
         name: 'Secret',
-        component: () =>
-            import ( /* webpackChunkName: "secretView" */ '../components/Secret/SecretView')
+        component: ()=>Promise.resolve(components.Secret)
     },
     {
         path: '/upload',
         name: 'Upload',
-        component: () =>
-            import ( /* webpackChunkName: "uploadView" */ '@/components/Upload/uploadView')
+        component: ()=>Promise.resolve(components.Upload)
     },
     {
         path: '/register',
         name: 'Register',
-        component: () =>
-            import ( /* webpackChunkName: "about" */ '../LogInOutRegister/RegisterView')
+        component: ()=>Promise.resolve(components.Register)
     }
 ]
 

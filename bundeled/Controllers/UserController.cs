@@ -50,7 +50,7 @@ namespace bundeled.Controllers
 
             user.Token = tokenHandler.WriteToken(jwt);
 
-            return Ok(new { token = user.Token });
+            return Ok(new { User =  user.GetUserWithNulledPassword() });
         }
         [Authorize]
         [HttpPost("secret")]

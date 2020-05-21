@@ -9,7 +9,7 @@
 
 <script>
 import axios from "axios";
-import router from "../router";
+import router from "../../router";
 
 export default {
   data() {
@@ -30,7 +30,13 @@ export default {
       };
       await axios(options)
         .then(function(response) {
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("token", response.data.user.token);
+          /* eslint-disable no-console */
+          console.log("user: " + response.data.user.firstName);
+          console.log("user: " + response.data.user.lastName);
+          console.log("user: " + response.data.user.email);
+          console.log("user: " + response.data.user.userName);
+          /* eslint-enable no-console */
           router.push(localStorage.getItem("to"));
         })
         .catch(function(error) {

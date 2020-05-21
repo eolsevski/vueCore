@@ -1,4 +1,5 @@
 ﻿using Core.Domain.FileService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,7 +23,7 @@ namespace bundeled.Controllers
             _logger = logger;
             _fileService = fileService;
         }
-
+        [Authorize]
         [HttpPost("upload")]
         public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files)
         {

@@ -8,7 +8,7 @@
 
 <script>
 
-import Login from './Login'
+import Login from '../LogInOutRegister/Login'
 
 export default {
     components:{

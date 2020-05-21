@@ -32,9 +32,10 @@ namespace Core.Domain.User
 
         public User GetUserWithNulledPassword()
         {
-            var result = new User(Id, FirstName, LastName, Email, UserName, null, Role, Token);
+            /*var result = new User(Id, FirstName, LastName, Email, UserName, null, Role, Token);
             this.Password = null;
-            return this;
+            return this;*/
+            return new User(Id, FirstName, LastName, Email, UserName, null, Role, Token);
         }
 
         public static User Create(int id, string firstName, string lastName, string email, string userName, string password, string role, string token)

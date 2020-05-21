@@ -42,6 +42,7 @@
 
 <script>
 import axios from 'axios';
+import auth_header from "../../helpers/auth_header"
   const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
   const BASE_URL = 'http://localhost:50598';
   export default {
@@ -78,8 +79,15 @@ import axios from 'axios';
 
 
       upload:function(formData) {
+
     const url = `${BASE_URL}/file/upload`;
-    return axios.post(url, formData)
+    var headers = auth_header();
+    return axios({
+      method: 'POST',
+      url: url,
+      headers:headers,
+      data:formData
+    })
         .then(x => x.data)
             ;
 },
@@ -94,7 +102,7 @@ import axios from 'axios';
         this.currentStatus = STATUS_SAVING;
 
         this.upload(formData)
-          //.then(this.wait(1500)) // DEV ONLY: wait for 1.5s 
+          .then(this.wait(2500)) // DEV ONLY: wait for 2.5s 
           .then(x => {
             this.uploadedFiles = [].concat(x);
             this.currentStatus = STATUS_SUCCESS;

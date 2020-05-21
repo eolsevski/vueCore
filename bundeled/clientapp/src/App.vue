@@ -38,7 +38,7 @@
             </template>
             <!-- <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#">Sign Out</b-dropdown-item> -->
-            <b-dropdown-item class="b-dropdown-item"  v-if="!loged" to="/login">Login</b-dropdown-item>
+            <b-dropdown-item class="b-dropdown-item"  v-if="!loged" to="/login" @click="logingIn()">Login</b-dropdown-item>
             <b-dropdown-item class="b-dropdown-item"  v-if="!loged" to="/register">Register</b-dropdown-item>
             <b-dropdown-item class="b-dropdown-item" style="cursor: pointer;color:red" v-if="loged" v-on:click="Logout" >Logout</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -78,11 +78,11 @@ export default {
     setColorSchema:function(color){
       this.color=color;
     },
+
     checkLogedInStatus: async  function() {
       if (localStorage.getItem("token") == "undefined") return false;
       if (localStorage.getItem("token") == null) return false;
 
-       
        return await  axios(prepare_request('/user/checktoken'))
       .then(function () { 
         return true
@@ -94,7 +94,7 @@ export default {
         this.$router.push("/");
       }
         return false
-        })      ;
+        });
     },
 
     Logout: function() {
@@ -106,12 +106,11 @@ export default {
       }
       this.loged = false;
     },
+
     setLocale(locate) {
       this.$i18n.locale = locate
-      /*eslint-disable no-console*/
-    console.log(this.$i18n.locale);
-    /*eslint-enable no-console*/
-    }
+    },
+    logingIn(){ /*need store commint*/}
   }
 }
 </script>
