@@ -124,6 +124,11 @@ import auth_header from "../../helpers/auth_header"
           .map(x => {
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
+
+          //////////////////////
+          formData.append('userName', "userName");
+          //////////////////////////////
+          
         // save it
         this.save(formData);
       }

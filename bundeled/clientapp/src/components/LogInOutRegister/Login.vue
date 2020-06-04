@@ -3,23 +3,26 @@
     <input type="text" placeholder="username" v-model="userName" />
     <input type="password" placeholder="password" v-model="password" />
     <button class="login" @click="Login">Login</button>
-    
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import router from "../../router";
 
 export default {
   data() {
     return {
       userName: "userName",
-      password: "password"
+      password: "password",
+      token: null
     };
   },
   methods: {
     Login: async function() {
+
+      const self = this;
+      let credentials = { userName: this.userName, token: null };
+
       const options = {
         method: "post",
         url: "/user/login",
@@ -28,32 +31,30 @@ export default {
           password: this.password
         }
       };
-      await axios(options)
+      this.token = await axios(options)
         .then(function(response) {
-          localStorage.setItem("token", response.data.user.token);
-          /* eslint-disable no-console */
-          console.log("user: " + response.data.user.firstName);
-          console.log("user: " + response.data.user.lastName);
-          console.log("user: " + response.data.user.email);
-          console.log("user: " + response.data.user.userName);
-          /* eslint-enable no-console */
-          router.push(localStorage.getItem("to"));
+          
+           credentials.token = response.data.user.token;
+
+            self.$store.commit("setUser", credentials);
+          
+            self.$router.push(localStorage.getItem("to"));
+            
+          return response.data.user.token;
         })
         .catch(function(error) {
-          /* eslint-disable no-console */
-          console.log("errorMsg: " + error);
-          /* eslint-enable no-console */
+          ()=>{this.$log.fatal("errorMsg: " + error);}
         });
-    },
-    Logout: function() {
-      localStorage.token = "undefined";
+
+      this.$log.debug("loged as " + this.$store.state.user.user.userName);
+
+      this.$log.debug(this.token);
     }
   }
 };
 </script>
 
 <style scoped>
-
 .main {
   display: flex;
   flex-direction: column;
@@ -78,7 +79,7 @@ button {
   /* for IE */
   -webkit-text-stroke-color: #9acd32;
   border: 0.3px solid #9acd32;
-  
+
   align-self: flex-start;
 }
 input {

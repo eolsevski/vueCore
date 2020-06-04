@@ -1,9 +1,13 @@
+import store from '../store'
+
 export default function auth_header() {
 
-    let token = localStorage.getItem("token");
+    //const token = localStorage.getItem("token");
 
-    if (token) {
-        return { Authorization: "Bearer " + token };
+    const storedToken = store.state.user.user.token;
+
+    if (storedToken) {
+        return { Authorization: "Bearer " + storedToken };
     } else {
         return {};
     }

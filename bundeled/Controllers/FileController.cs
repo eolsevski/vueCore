@@ -25,7 +25,7 @@ namespace bundeled.Controllers
         }
         [Authorize]
         [HttpPost("upload")]
-        public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files)
+        public async Task<IActionResult> OnPostUploadAsync(List<IFormFile> files, [FromForm] string userName)
         {
             try
             {

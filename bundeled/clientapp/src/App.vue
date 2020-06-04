@@ -34,7 +34,9 @@
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <em>{{$t("NavBar.User")}}</em>
+              <em >
+               {{userName($t("NavBar.User"))}}
+                </em>
             </template>
             <!-- <b-dropdown-item href="#">Profile</b-dropdown-item>
             <b-dropdown-item href="#">Sign Out</b-dropdown-item> -->
@@ -68,8 +70,10 @@ export default {
     };
   },
 
-  mounted: async function() {
+  mounted: 
+    async function() {
     this.loged = await this.checkLogedInStatus();
+    
   },
   updated: async function() {
     this.loged = await this.checkLogedInStatus();
@@ -78,32 +82,40 @@ export default {
     setColorSchema:function(color){
       this.color=color;
     },
+    userName(userName){
 
-    checkLogedInStatus: async  function() {
-      if (localStorage.getItem("token") == "undefined") return false;
-      if (localStorage.getItem("token") == null) return false;
+      const result = this.$store.state.user.user.userName;
+    
+      if(result==null)
+      {return userName}
+      else{
+        return result    
+      }
+    },
+    
+    checkLogedInStatus: async function() {
+      const self = this;
+      if (this.$store.state.user.user.token == "undefined") return false;
+      if (this.$store.state.user.user.token == null) return false;
 
-       return await  axios(prepare_request('/user/checktoken'))
+       return await axios(prepare_request('/user/checktoken'))
       .then(function () { 
         return true
         })
       .catch(function () {
+        self.$store.commit('logout');
         localStorage.removeItem("token");
-        if(this.$router.currentRoute.path!='/')
-      {
-        this.$router.push("/");
-      }
+        if(self.$router.currentRoute.path!='/')
+          {this.$router.push("/");}
         return false
         });
     },
 
     Logout: function() {
       localStorage.removeItem("token");
-    
+      this.$store.commit('logout');
       if(this.$router.currentRoute.path!='/')
-      {
-        this.$router.push("/");
-      }
+      { this.$router.push("/"); }
       this.loged = false;
     },
 

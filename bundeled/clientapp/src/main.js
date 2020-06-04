@@ -1,22 +1,36 @@
-import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import store  from './store';
-import Vuex from 'vuex';
-import 'babel-polyfill';
-import VueI18n from 'vue-i18n'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-import '@/components';
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import store  from './store'
+import 'babel-polyfill'
+import '@/components'
 import i18n from './i18n'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import VueLogger from 'vuejs-logger';
+
 
 // Install BootstrapVue
 Vue.use(BootstrapVue)
+
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-Vue.config.productionTip = false;
-Vue.use([Vuex, VueI18n]);
+Vue.config.productionTip = false
+
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+const options = {
+    isEnabled: true,
+    logLevel : isDevelopment ? 'debug' : 'error',
+    stringifyArguments : false,
+    showLogLevel : true,
+    showMethodName : true,
+    separator: '|',
+    showConsoleColors: true
+};
+ 
+Vue.use(VueLogger, options);
 
 new Vue({
     router,

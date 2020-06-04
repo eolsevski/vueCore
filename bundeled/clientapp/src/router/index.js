@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home/Home'
 import * as components from '../components/index'
-
+import store from '../store'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -13,27 +13,27 @@ const routes = [{
     {
         path: '/about',
         name: 'About',
-        component: ()=>Promise.resolve(components.About)
+        component: components.About
     },
     {
         path: '/login',
         name: 'Login',
-        component: ()=>Promise.resolve(components.Login)
+        component: components.Login
     },
     {
         path: '/secret',
         name: 'Secret',
-        component: ()=>Promise.resolve(components.Secret)
+        component: components.Secret
     },
     {
         path: '/upload',
         name: 'Upload',
-        component: ()=>Promise.resolve(components.Upload)
+        component: components.Upload
     },
     {
         path: '/register',
         name: 'Register',
-        component: ()=>Promise.resolve(components.Register)
+        component: components.Register
     }
 ]
 
@@ -45,7 +45,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     const publicPages = ['/login', '/', '/register'];
     const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('token');
+    const loggedIn = store.state.user.user.token;
     //remember last path before login, 
     if (to.path != '/login')
         localStorage.setItem('to', to.path);
