@@ -6,14 +6,17 @@
     @onClick="nodeWasClicked"
     @inputClicked="markItem"
     />
-    <treeBrowser2  :tree-data="root" @node-click="markItem"/>
+    
     <span>Checked names: {{checkedItems}}</span>
+    <Navbar  />
+    
   </div>
 </template>
 
 <script>
 import upload from '@/components/Upload/upload'
 import treeBrowser from '../Treeview/TreeBrowser'
+import Navbar from '@/components/NeonButton/Navbar'
 
 
 export default {
@@ -46,7 +49,8 @@ export default {
             ]
           }
         ]
-      }
+      },
+      
     }
   },
   methods:{
@@ -64,7 +68,15 @@ alert(node.id);
   },
     components:{
         upload,
-        treeBrowser
+        treeBrowser,
+        Navbar
     }
 }
 </script>
+
+<style scoped>
+.upload{
+  background: black;
+  color: aliceblue;
+}
+</style>

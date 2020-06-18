@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app"  >
     <b-navbar toggleable="lg" type="dark" :variant="color">
       <b-navbar-brand href="#">Gjensidige</b-navbar-brand>
 
@@ -129,9 +129,12 @@ export default {
 
 <style>
 :root{
---blueLocal: #9dabd4;
+  --blueLocal: #9dabd4;
   --redLocal: #b00;
   --greenLocal: #9acd32;
+}
+.dark-mode{
+  background: black;
 }
 .content-view{
   display: flex;
