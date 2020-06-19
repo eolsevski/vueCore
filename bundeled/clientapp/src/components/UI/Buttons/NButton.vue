@@ -3,19 +3,33 @@
         <label for="toggle"> &#9776;</label>
         <input type="checkbox" id="toggle" />
         <div class="menu">
-            <router-link :to="href" tag="a">
+            <template v-if="darkModeButton">
+               <a @click="$emit('eee')">
                 <span></span>
                 <span></span>
                 <span></span>
-                <span></span> {{value}}
+                <span></span> 
+                 <i  class="fa fa-adjust" aria-hidden="true"></i>
+                 </a>
+            </template>
+            <template v-else>
+               <router-link :to="href" tag="a">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>  
+                 {{value}}
             </router-link>
+            </template>
+            
+            
         </div>
     </div >
 </template>
 
 <script>
 export default {
-    props:['value', 'href'],  
+    props:['value', 'href', 'darkModeButton'],  
 }
 </script>
 
@@ -40,6 +54,7 @@ a {
     overflow: hidden;
     transition: 0.5s;
     letter-spacing: 4px;
+     cursor: pointer;
     /*ATTENTION*/
     -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
 }

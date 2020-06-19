@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div :style="{'margin-left': `${depth * 35}px`}" class="node">
       <i
         @click="expandCollapsed"

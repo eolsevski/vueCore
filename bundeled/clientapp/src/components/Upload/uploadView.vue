@@ -16,7 +16,7 @@
 <script>
 import upload from '@/components/Upload/upload'
 import treeBrowser from '../Treeview/TreeBrowser'
-import Navbar from '@/components/NeonButton/Navbar'
+import Navbar from '@/components/UI/Navbars/Navbar'
 
 
 export default {

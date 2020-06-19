@@ -1,16 +1,20 @@
 <template>
-    <div class="body light direction-col">
+    <div class="body direction-row light"  :class="{  'dark' : darkMode}">
         <NButton 
         v-for="button in buttons"
         :key="button.Value"
         :value="button.Value"
         :href="button.Href"
         />
+        <NButton 
+        :darkModeButton=true 
+        @eee="darkMode=!darkMode"
+        />
     </div>
 </template>
 
 <script>
-import NButton from '@/components/NeonButton/NButton'
+import NButton from '@/components/UI/Buttons/NButton'
 export default {
     props:[],
     data(){return {
@@ -31,7 +35,8 @@ export default {
                 Value:"Upload",
                 Href:"/upload"
                 },
-        ]
+        ],
+        darkMode:false
     }   
     },
     components:{
@@ -48,15 +53,20 @@ export default {
     justify-content: flex-end;
     align-items: flex-start;
     flex-direction: row;
-    
+
 }
 .light{
-background:whitesmoke;
+background:white;
+color: black;
 }
 .dark{
 background: #050801;
+color: white;
 }
 .direction-col{
     flex-direction: column;
+}
+.direction-row{
+    flex-direction: row;
 }
 </style>
