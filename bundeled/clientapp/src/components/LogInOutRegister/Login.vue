@@ -2,13 +2,13 @@
   <div class="main">
     <input type="text" placeholder="username" v-model="userName" />
     <input type="password" placeholder="password" v-model="password" />
-    <button class="login" @click="Login">Login</button>
+    <button class="login" @click="Login2">Login</button>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -17,9 +17,21 @@ export default {
       token: null
     };
   },
+  computed:mapGetters(['logedIn']),
   methods: {
-    Login: async function() {
+    ...mapActions(["fetchToken"]),
+    Login2() {
+      const self = this;
+      this.fetchToken({ userName: this.userName, password: this.password })
+      .then(()=>{
+      if(self.logedIn){
+      self.$router.push(localStorage.getItem("to"));
+      }
+      }
+      );
+    },
 
+    Login: async function() {
       const self = this;
       let credentials = { userName: this.userName, token: null };
 
@@ -33,23 +45,27 @@ export default {
       };
       this.token = await axios(options)
         .then(function(response) {
-          
-           credentials.token = response.data.user.token;
+          credentials.token = response.data.user.token;
 
-            self.$store.commit("setUser", credentials);
-          
-            self.$router.push(localStorage.getItem("to"));
-            
+          self.$store.commit("setUser", credentials);
+
+          self.$router.push(localStorage.getItem("to"));
+
           return response.data.user.token;
         })
         .catch(function(error) {
-          ()=>{this.$log.fatal("errorMsg: " + error);}
+          () => {
+            this.$log.fatal("errorMsg: " + error);
+          };
         });
 
       this.$log.debug("loged as " + this.$store.state.user.user.userName);
 
       this.$log.debug(this.token);
     }
+  },
+  async mounted() {
+    //this.fetchToken("this.userName",this.password);
   }
 };
 </script>

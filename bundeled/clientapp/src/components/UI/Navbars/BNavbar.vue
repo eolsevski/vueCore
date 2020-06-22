@@ -8,9 +8,9 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <router-link class="nav-link active" to="/">{{$t("NavBar.Home")}}</router-link>
-          <router-link v-if="loged" class="nav-link active" to="/about">{{$t("NavBar.About")}}</router-link>
-          <router-link v-if="loged" class="nav-link active" to="/secret">{{$t("NavBar.Secret")}}</router-link>
-          <router-link v-if="loged" class="nav-link active" to="/upload">{{$t("NavBar.Upload")}}</router-link>
+          <router-link v-if="logedIn" class="nav-link active" to="/about">{{$t("NavBar.About")}}</router-link>
+          <router-link v-if="logedIn" class="nav-link active" to="/secret">{{$t("NavBar.Secret")}}</router-link>
+          <router-link v-if="logedIn" class="nav-link active" to="/upload">{{$t("NavBar.Upload")}}</router-link>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -50,15 +50,14 @@
             <b-dropdown-item href="#">Sign Out</b-dropdown-item>-->
             <b-dropdown-item
               class="b-dropdown-item"
-              v-if="!loged"
+              v-if="!logedIn"
               to="/login"
-              @click="checkLogedInStatus()"
             >Login</b-dropdown-item>
-            <b-dropdown-item class="b-dropdown-item" v-if="!loged" to="/register">Register</b-dropdown-item>
+            <b-dropdown-item class="b-dropdown-item" v-if="!logedIn" to="/register">Register</b-dropdown-item>
             <b-dropdown-item
               class="b-dropdown-item"
               style="cursor: pointer;color:red"
-              v-if="loged"
+              v-if="logedIn"
               @click="Logout"
             >Logout</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -73,30 +72,21 @@
 <script>
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-import prepare_request from "@/helpers/prepare_request";
-import axios from "axios";
-
+import {mapGetters, mapActions} from "vuex";
 export default {
   data() {
     return {
-      loged: false,
       colorVariants:['primary', 'success', 'info', 'warning', 'danger', 'dark'],
       color:'primary', 
       tmp:""
     };
   },
-  computed:{
-   
-  },
-  mounted: 
-    async function() {
-    this.loged = await this.checkLogedInStatus();
-    
-  },
-  updated: async function() {
-    this.loged = await this.checkLogedInStatus();
-  },
+  
+  computed:mapGetters(['getToken','logedIn']),
+
   methods: {
+    ...mapActions(['checkToken']),
+
     setColorSchema:function(color){
       this.color=color;
     },
@@ -111,30 +101,12 @@ export default {
       }
     },
     
-    checkLogedInStatus: async function() {
-      const self = this;
-      if (this.$store.state.user.user.token == "undefined") return false;
-      if (this.$store.state.user.user.token == null) return false;
-
-       return await axios(prepare_request('/user/checktoken'))
-      .then(function () { 
-        return true
-        })
-      .catch(function () {
-        self.$store.commit('logout');
-        localStorage.removeItem("token");
-        if(self.$router.currentRoute.path!='/')
-          {this.$router.push("/");}
-        return false
-        });
-    },
-
     Logout: function() {
-      localStorage.removeItem("token");
+      
       this.$store.commit('logout');
       if(this.$router.currentRoute.path!='/')
       { this.$router.push("/"); }
-      this.loged = false;
+     
     },
 
     setLocale(locate) {
