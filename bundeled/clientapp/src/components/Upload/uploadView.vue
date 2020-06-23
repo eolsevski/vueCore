@@ -8,7 +8,6 @@
     />
     
     <span>Checked names: {{checkedItems}}</span>
-    <Navbar  />
     
   </div>
 </template>
@@ -16,8 +15,6 @@
 <script>
 import upload from '@/components/Upload/upload'
 import treeBrowser from '../Treeview/TreeBrowser'
-import Navbar from '@/components/UI/Navbars/Navbar'
-
 
 export default {
   data() {
@@ -68,15 +65,8 @@ alert(node.id);
   },
     components:{
         upload,
-        treeBrowser,
-        Navbar
+        treeBrowser
     }
 }
 </script>
 
-<style scoped>
-.upload{
-  background: black;
-  color: aliceblue;
-}
-</style>

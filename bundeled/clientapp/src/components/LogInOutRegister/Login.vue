@@ -80,28 +80,15 @@ export default {
 button {
   color: transparent;
   -webkit-text-stroke-width: 0.3px;
-
   font-size: 17pt;
-
   background: transparent;
-
   margin: 3px;
-
   width: 100px;
 }
-.login {
-  -webkit-text-stroke-color: var(--greenLocal);
-  border: 0.3px solid var(--greenLocal);
-  /* for IE */
-  -webkit-text-stroke-color: #9acd32;
-  border: 0.3px solid #9acd32;
-
+.login { 
   align-self: flex-start;
 }
 input {
-  border: var(--blueLocal) 0.3px solid;
-  /* for IE */
-  border: #9dabd4 0.3px solid;
   margin: 3px;
   font-size: 12pt;
 }
@@ -109,9 +96,32 @@ input {
   align-self: flex-end;
 }
 ::placeholder {
-  color: var(--blueLocal);
-  /* for IE */
-  color: #9dabd4;
   text-align: center;
+}
+@media (prefers-color-scheme: dark) {
+  .login {
+-webkit-text-stroke-color: var(--navBarDarkThemeLight);
+  border: 0.3px solid var(--navBarDarkThemeLight);
+  }
+  input{
+border: var(--navBarDarkThemeLight) 0.3px solid;
+color:var(--navBarDarkThemeLight);
+  }
+  ::placeholder{
+color: var(--navBarDarkThemeLight);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .login {
+-webkit-text-stroke-color: var(--navBarLightThemeLight);
+  border: 0.3px solid var(--navBarLightThemeLight);
+  }
+  input{
+border: var(--navBarLightThemeLight) 0.3px solid;
+color:var(--navBarLightThemeLight);
+  }
+  ::placeholder{
+color: var(--navBarLightThemeLight);
+  }
 }
 </style>

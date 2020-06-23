@@ -10,12 +10,12 @@
       {{node.name}}
       <input
         type="checkbox"
-        id="jack"
+        id="v"
+        class="checkbox"
         v-bind:value="node.id"
         v-model="checkd"
         @click="inputChecked(node.fulPath, checkd)"
       />
-    
     </div>
 
     <!-- eslint-disable -->
@@ -27,7 +27,7 @@
       :depth="depth + 1"
       @inputClicked="inputChecked"
     />
-    
+
     <!-- eslint-enable -->
   </div>
 </template>
@@ -45,11 +45,10 @@ export default {
       type: String,
       default: ""
     },
-    checked:{
+    checked: {
       type: Boolean,
       default: false
     }
-    
   },
 
   data() {
@@ -66,9 +65,9 @@ export default {
         //this.$emit("onClick", node, newName);
       }
     },
-    inputChecked(name, checked){
+    inputChecked(name, checked) {
       //alert('midway catch: ' + " name: " + name);
-      this.$emit('inputClicked', name, checked);
+      this.$emit("inputClicked", name, checked);
     }
   },
   computed: {
@@ -83,4 +82,69 @@ export default {
 .node {
   text-align: left;
 }
+.checkbox {
+  -webkit-appearance: none;
+  margin-bottom:auto;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  display: inline-block;
+  position: relative;
+}
+@media (prefers-color-scheme: dark) {
+  .checkbox {
+    background-color: var(--navBarDarkThemeGrey);
+    border: 0.1rem solid var(--navBarDarkThemeLight);
+    
+  }
+  .checkbox:hover, .checkbox:checked:hover {
+    color: var(--navBarLightThemeLight);
+    border: 0.15rem solid var(--navBarDarkThemeLight);;
+  }
+  .checkbox:checked{
+    color: var(--navBarDarkThemeLight);
+    border: 0.1rem solid var(--navBarDarkThemeLight);
+    
+  }
+  .checkbox:active, .checkbox:checked:active {
+  /* box-shadow: 0 1px 2px var(--navBarDarkThemeLight), inset 0px 1px 3px var(--navBarDarkThemeLight); */
+  border: 0.1rem solid var(--navBarDarkThemeLight);
+ 
+}
+  .checkbox:checked:after {
+	content: '\2714';
+	font-size: 0.8rem;
+	position: absolute;
+	top: 0px;
+	left: 3px;
+  color: var(--navBarDarkThemeLight);
+  
+}
+
+}
+@media (prefers-color-scheme: light) {
+  .checkbox {
+    background-color: var(--navBarLightThemeGrey);
+    border: 0.1rem solid var(--navBarLightThemeLight);
+  }
+
+  .checkbox:checked {
+    color: var(--navBarLightThemeLight);
+    border: 0.1rem solid var(--navBarLightThemeLight);
+  }
+  
+  .checkbox:active,
+  .checkbox:checked:active {
+    box-shadow: 0 1px 2px var(--navBarDarkThemeLight), inset 0px 1px 3px var(--navBarDarkThemeLight);
+    border: 0.1rem solid var(--navBarLightThemeLight);
+  }
+  .checkbox:checked:after {
+    content: "\2714";
+    font-size: 0.8rem;
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    color: var(--navBarLightThemeLight);
+  }
+}
+
 </style>

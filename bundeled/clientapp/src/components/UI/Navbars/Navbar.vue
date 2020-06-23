@@ -1,68 +1,77 @@
 <template>
-    <div class="body direction-row light"  :class="{  'dark' : darkMode}">
+    <div class="body" >
         <NButton 
         v-for="button in buttons"
         :key="button.Value"
         :value="button.Value"
         :href="button.Href"
+        :Visible="button.Visible?true:logedIn"
         />
-        <NButton 
+        <dropdown/>
+        <!-- <NButton 
         :darkModeButton=true 
         @eee="darkMode=!darkMode"
-        />
+        /> -->
+        
     </div>
 </template>
 
 <script>
 import NButton from '@/components/UI/Buttons/NButton'
+import dropdown from '@/components/UI/Dropdown/NDropDown'
+import {mapGetters} from 'vuex'
 export default {
     props:[],
     data(){return {
         buttons:[
                 {
                 Value:"Home",
-                Href:"/"
+                Href:"/",
+                Visible:true
                 },
                 {
                 Value:"About",
-                Href:"/about"
+                Href:"/about",
+                Visible:false
                 },
                 {
                 Value:"Secret",
-                Href:"/secret"
+                Href:"/secret",
+                Visible:false
                 },
                 {
                 Value:"Upload",
-                Href:"/upload"
+                Href:"/upload",
+                Visible:false
                 },
-        ],
-        darkMode:false
+        ]
+        
     }   
     },
+    computed:mapGetters(['logedIn']),
+    methods:{
+        isLoged(){
+            return this.logedIn;
+        }
+    },
     components:{
-        NButton
+        NButton,
+        dropdown
     }
 }
 </script>
 
 <style scoped>
 .body{
-    background: white;
-    width: 100%;
+    margin-right: 5rem;
+    width: 98%;
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
     flex-direction: row;
+/* border: solid tomato 1px; */
+}
 
-}
-.light{
-background:white;
-color: black;
-}
-.dark{
-background: #050801;
-color: white;
-}
 .direction-col{
     flex-direction: column;
 }

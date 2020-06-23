@@ -1,5 +1,7 @@
 import prepare_request from "@/helpers/prepare_request";
 import axios from "axios";
+import Vue from 'vue';
+
 const state = {
     user: {
         userName: null,
@@ -35,11 +37,8 @@ const getters = {
 
 const actions = {
     async fetchToken({ commit }, user,) {
-        const self = this;
-        /* eslint-disable no-console */
-        console.log("from mutations: ")
-        console.log(user.userName);
-        console.log(user.password);
+        
+        Vue.$log.debug('UserName: ' + user.userName);
         let credentials = { userName: user.userName, token: null };
 
         const options = {
@@ -55,24 +54,26 @@ const actions = {
             .then(function (response) {
                 credentials.token = response.data.user.token;
                 commit("setUser", credentials);
+                Vue.$log.debug("response status: " + response.status); 
                 return response.data.user.token;
             })
             .catch(function (error) {
-                () => { self.$log.fatal("errorMsg: " + error); }
+                () => { Vue.$log.fatal("errorMsg: " + error); }
             });
     },
 
     async checkToken({ commit }) {
         return await axios(prepare_request('/user/checktoken'))
             .then(function () {
+                Vue.$log.debug("token still valid");
                 return true;
             })
             .catch(function () {
+                Vue.$log.debug("token invalid. Loging Out");
                 commit('logout');
                 return false
             });
     }
-
 }
 export default {
     state,
