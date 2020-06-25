@@ -8,7 +8,10 @@
     "Search" : "Search",
     "Lang" : "Lang",
     "Color" : "Color",
-    "User" : "User"
+    "User" : "User",
+    "Login" : "Login",
+    "Logout" : "Logout",
+    "Register" : "Register"
   },
   "UploadFiles":{
     "InputBoxMessage" : "Drag your file(s){ test } here to begin or click to browse",

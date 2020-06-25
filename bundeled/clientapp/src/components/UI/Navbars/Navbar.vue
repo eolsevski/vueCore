@@ -1,13 +1,17 @@
 <template>
     <div class="body" >
         <NButton 
-        v-for="button in buttons"
+        v-for="button in getButtons"
         :key="button.Value"
+        
         :value="button.Value"
         :href="button.Href"
         :Visible="button.Visible?true:logedIn"
+        
         />
-        <dropdown/>
+        <!--:value='$t("NavBar."+button.Value)'  -->
+        <userDropdown/>
+        <langDropdown/>
         <!-- <NButton 
         :darkModeButton=true 
         @eee="darkMode=!darkMode"
@@ -18,37 +22,39 @@
 
 <script>
 import NButton from '@/components/UI/Buttons/NButton'
-import dropdown from '@/components/UI/Dropdown/NDropDown'
+import userDropdown from '@/components/UI/Dropdown/NUserDropDown'
+import langDropdown from '@/components/UI/Dropdown/NLangDropDown'
 import {mapGetters} from 'vuex'
 export default {
-    props:[],
-    data(){return {
-        buttons:[
+    computed:{
+        ...mapGetters(['logedIn']),
+        getButtons(){
+            return [
                 {
-                Value:"Home",
+                Value: this.$i18n.t("NavBar.Home"),
                 Href:"/",
                 Visible:true
                 },
                 {
-                Value:"About",
+                Value:this.$i18n.t("NavBar.About"),
                 Href:"/about",
                 Visible:false
                 },
                 {
-                Value:"Secret",
+                Value:this.$i18n.t("NavBar.Secret"),
                 Href:"/secret",
                 Visible:false
                 },
                 {
-                Value:"Upload",
+                Value:this.$i18n.t("NavBar.Upload"),
                 Href:"/upload",
                 Visible:false
                 },
         ]
+            
         
-    }   
-    },
-    computed:mapGetters(['logedIn']),
+        }
+        },
     methods:{
         isLoged(){
             return this.logedIn;
@@ -56,7 +62,8 @@ export default {
     },
     components:{
         NButton,
-        dropdown
+        userDropdown,
+        langDropdown
     }
 }
 </script>

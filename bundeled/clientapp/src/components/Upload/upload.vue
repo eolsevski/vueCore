@@ -142,14 +142,15 @@ import auth_header from "../../helpers/auth_header"
 
 <style lang="scss">
   .dropbox {
-    outline: 2px dashed grey; /* the dash box */
+    
     outline-offset: -10px;
-    background: lightcyan;
-    color: dimgray;
-    padding: 10px 10px;
+    background: transparent;
+    //color: dimgray;
+    padding: 10px 30px;
     min-height: 200px; /* minimum height */
     position: relative;
     cursor: pointer;
+    //border: 1px red dashed;
   }
   
   .input-file {
@@ -157,16 +158,31 @@ import auth_header from "../../helpers/auth_header"
     width: 100%;
     height: 200px;
     position: absolute;
+    left: 0;
     cursor: pointer;
+    //border: 1px red dashed;
+    
   }
   
   .dropbox:hover {
-    background: lightblue; /* when mouse over to the drop zone, change color */
+    background: transparent; /* when mouse over to the drop zone, change color */
   }
   
   .dropbox p {
     font-size: 1.2em;
     text-align: center;
     padding: 50px 0;
+    //border: 1px red dashed;
+  }
+
+  @media (prefers-color-scheme: dark) {
+ .dropbox {
+   outline: 2px dashed var(--navBarDarkThemeLight); /* the dash box */
+ }
+  }
+  @media (prefers-color-scheme: light) {
+ .dropbox {
+   outline: 2px dashed var(--navBarLightThemeLight); /* the dash box */
+ }
   }
 </style>

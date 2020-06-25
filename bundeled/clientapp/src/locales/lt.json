@@ -8,7 +8,10 @@
     "Search" : "Paieška",
     "Lang" : "Kalba",
     "Color" : "Spalva",
-    "User" : "Vartotojas"
+    "User" : "Vartotojas",
+    "Login" : "Prisijungti",
+    "Logout" : "Atsijungti",
+    "Register" : "Registruotis"
   },
   "UploadFiles":{
     "InputBoxMessage" : "Tempkite laimena(s) čia arba paspauskite, kad įkelti",

@@ -17,18 +17,19 @@ export default {
       token: null
     };
   },
-  computed:mapGetters(['logedIn']),
+  computed: mapGetters(["logedIn"]),
   methods: {
     ...mapActions(["fetchToken"]),
     Login2() {
       const self = this;
-      this.fetchToken({ userName: this.userName, password: this.password })
-      .then(()=>{
-      if(self.logedIn){
-      self.$router.push(localStorage.getItem("to"));
-      }
-      }
-      );
+      this.fetchToken({
+        userName: this.userName,
+        password: this.password
+      }).then(() => {
+        if (self.logedIn) {
+          self.$router.push(localStorage.getItem("to"));
+        }
+      });
     },
 
     Login: async function() {
@@ -85,7 +86,7 @@ button {
   margin: 3px;
   width: 100px;
 }
-.login { 
+.login {
   align-self: flex-start;
 }
 input {
@@ -100,28 +101,30 @@ input {
 }
 @media (prefers-color-scheme: dark) {
   .login {
--webkit-text-stroke-color: var(--navBarDarkThemeLight);
-  border: 0.3px solid var(--navBarDarkThemeLight);
+    -webkit-text-stroke-color: var(--navBarDarkThemeLight);
+    border: 0.3px solid var(--navBarDarkThemeLight);
   }
-  input{
-border: var(--navBarDarkThemeLight) 0.3px solid;
-color:var(--navBarDarkThemeLight);
+  input {
+    border: var(--navBarDarkThemeLight) 0.3px solid;
+    color: var(--navBarDarkThemeLight);
+    background: transparent;
   }
-  ::placeholder{
-color: var(--navBarDarkThemeLight);
+  ::placeholder {
+    color: var(--navBarDarkThemeLight);
   }
 }
 @media (prefers-color-scheme: light) {
   .login {
--webkit-text-stroke-color: var(--navBarLightThemeLight);
-  border: 0.3px solid var(--navBarLightThemeLight);
+    -webkit-text-stroke-color: var(--navBarLightThemeLight);
+    border: 0.3px solid var(--navBarLightThemeLight);
   }
-  input{
-border: var(--navBarLightThemeLight) 0.3px solid;
-color:var(--navBarLightThemeLight);
+  input {
+    border: var(--navBarLightThemeLight) 0.3px solid;
+    color: var(--navBarLightThemeLight);
+    background: transparent;
   }
-  ::placeholder{
-color: var(--navBarLightThemeLight);
+  ::placeholder {
+    color: var(--navBarLightThemeLight);
   }
 }
 </style>

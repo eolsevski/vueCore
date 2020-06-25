@@ -110,7 +110,8 @@ export default {
     },
 
     setLocale(locate) {
-      this.$i18n.locale = locate
+      this.$i18n.locale = locate,
+      
     }
     
   }

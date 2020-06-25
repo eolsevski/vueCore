@@ -1,11 +1,11 @@
 <template>
   <div class="dropdown">
-    <button class="dropbtn">{{userName($t("NavBar.User"))}}</button>
+    <button class="dropbtn" :class="{warn:!logedIn}" >{{userName($t("NavBar.User"))}}</button>
     <i class="fa fa-caret-down"></i>
     <div class="dropdown-content" style="left:0;">
-      <router-link v-if="!logedIn" to="/login" tag="a">Login</router-link>
-      <a v-if="logedIn" @click="Logout">Logout</a>
-      <router-link v-if="!logedIn" to="/register" tag="a">Register</router-link>
+      <router-link v-if="!logedIn" to="/login" tag="a">{{$t("NavBar.Login")}}</router-link>
+      <a v-if="logedIn" @click="Logout">{{$t("NavBar.Logout")}}</a>
+      <router-link v-if="!logedIn" to="/register" tag="a">{{$t("NavBar.Register")}}</router-link>
     </div>
   </div>
 </template>
@@ -47,7 +47,7 @@ a,.dropbtn,i {
   transition: 0.5s;
   letter-spacing: 4px;
   -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
-  padding: 1rem 1rem;
+  
   font-size: 1rem;
   border: none;
   cursor: pointer;
@@ -56,6 +56,7 @@ a,.dropbtn,i {
 a,
 .dropbtn{
 font-family: "Times New Roman", Times, serif;
+padding: 1rem 1rem;
 }
 .dropbtn{
  position: relative;;
@@ -121,5 +122,7 @@ font-family: "Times New Roman", Times, serif;
   background: var(--navBarLightThemeGrey);;
 }
 }
-
+.warn{
+  color: red;
+}
 </style>
